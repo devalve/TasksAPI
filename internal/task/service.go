@@ -25,7 +25,7 @@ func (s *Service) CreateTask() *Task {
 	taskID := strconv.Itoa(rand.Intn(1000000))
 	task := &Task{
 		ID:             taskID,
-		Status:         StatusPending,
+		Status:         Pending,
 		CreatedAt:      time.Now(),
 		ProcessingTime: rand.Intn(120) + 180, // 3-5 минут
 	}
@@ -39,7 +39,7 @@ func (s *Service) CreateTask() *Task {
 
 func (s *Service) processTask(task *Task) {
 	s.mu.Lock()
-	task.Status = StatusRunning
+	task.Status = Running
 	s.mu.Unlock()
 
 	start := time.Now()
@@ -48,8 +48,8 @@ func (s *Service) processTask(task *Task) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
-	if task.Status != StatusDeleted {
-		task.Status = StatusCompleted
+	if task.Status != Deleted {
+		task.Status = Completed
 		task.Result = "Task completed successfully"
 		task.Duration = time.Since(start).String()
 	}
@@ -72,7 +72,7 @@ func (s *Service) DeleteTask(id string) bool {
 		return false
 	}
 
-	task.Status = StatusDeleted
+	task.Status = Deleted
 	delete(s.tasks, id)
 	return true
 }

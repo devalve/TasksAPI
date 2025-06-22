@@ -5,10 +5,10 @@ import "time"
 type Status string
 
 const (
-	StatusPending   Status = "pending"
-	StatusRunning   Status = "running"
-	StatusCompleted Status = "completed"
-	StatusDeleted   Status = "deleted"
+	Pending   Status = "pending"
+	Running   Status = "running"
+	Completed Status = "completed"
+	Deleted   Status = "deleted"
 )
 
 type Task struct {
